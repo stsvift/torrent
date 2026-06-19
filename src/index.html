@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EmberTorrent</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand"><span class="logo">◆</span><div><strong>Ember</strong><span>Torrent</span></div></div>
+      <nav>
+        <button class="nav-item active">Dashboard</button>
+        <button class="nav-item">Downloading</button>
+        <button class="nav-item">Completed</button>
+        <button class="nav-item">Library</button>
+      </nav>
+      <div class="folder-card">
+        <span>Download folder</span>
+        <strong id="downloadPath">Loading…</strong>
+        <button id="chooseFolder">Change folder</button>
+      </div>
+    </aside>
+
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Windows torrent client</p>
+          <h1>Fast downloads. Dark control.</h1>
+          <p class="subhead">Built on WebTorrent with a modern black-and-orange command center.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="openTorrent" class="ghost">Open .torrent</button>
+          <button id="openDownloads" class="ghost">Open folder</button>
+        </div>
+      </header>
+
+      <section class="add-panel">
+        <input id="torrentInput" placeholder="Paste magnet link, info hash, or torrent URL" />
+        <button id="addTorrent">Add torrent</button>
+      </section>
+
+      <section class="stats-grid">
+        <article><span>Active</span><strong id="activeCount">0</strong></article>
+        <article><span>Downloaded</span><strong id="downloadedTotal">0 MB</strong></article>
+        <article><span>Down speed</span><strong id="downSpeed">0 KB/s</strong></article>
+        <article><span>Up speed</span><strong id="upSpeed">0 KB/s</strong></article>
+      </section>
+
+      <section class="torrent-board">
+        <div class="board-header"><h2>Torrents</h2><span id="statusText">No torrents yet</span></div>
+        <div id="torrentList" class="torrent-list empty"></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>
