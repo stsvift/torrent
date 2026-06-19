@@ -8,13 +8,17 @@
   </head>
   <body>
     <aside class="sidebar">
-      <div class="brand"><span class="logo">◆</span><div><strong>Ember</strong><span>Torrent</span></div></div>
-      <nav>
-        <button class="nav-item active">Dashboard</button>
-        <button class="nav-item">Downloading</button>
-        <button class="nav-item">Completed</button>
-        <button class="nav-item">Library</button>
+      <div class="brand"><strong>EmberTorrent</strong><span>Release desktop client</span></div>
+      <nav class="menu" aria-label="Torrent filters">
+        <button class="nav-item active" data-view="all"><span>All torrents</span><strong id="countAll">0</strong></button>
+        <button class="nav-item" data-view="downloading"><span>Downloading</span><strong id="countDownloading">0</strong></button>
+        <button class="nav-item" data-view="completed"><span>Completed</span><strong id="countCompleted">0</strong></button>
+        <button class="nav-item" data-view="paused"><span>Paused</span><strong id="countPaused">0</strong></button>
       </nav>
+      <div class="sidebar-actions">
+        <button id="openDownloads">Open download folder</button>
+        <button id="clearCompleted">Clear completed</button>
+      </div>
       <div class="folder-card">
         <span>Download folder</span>
         <strong id="downloadPath">Loading…</strong>
@@ -23,32 +27,45 @@
     </aside>
 
     <main class="shell">
-      <header class="hero">
+      <header class="topbar">
         <div>
           <p class="eyebrow">Windows torrent client</p>
-          <h1>Fast downloads. Dark control.</h1>
-          <p class="subhead">Built on WebTorrent with a modern black-and-orange command center.</p>
+          <h1>Downloads</h1>
         </div>
-        <div class="hero-actions">
-          <button id="openTorrent" class="ghost">Open .torrent</button>
-          <button id="openDownloads" class="ghost">Open folder</button>
+        <div class="topbar-actions">
+          <button id="pauseVisible" class="secondary">Pause visible</button>
+          <button id="resumeVisible" class="secondary">Resume visible</button>
+          <button id="openTorrent" class="primary">Open .torrent</button>
         </div>
       </header>
 
       <section class="add-panel">
-        <input id="torrentInput" placeholder="Paste magnet link, info hash, or torrent URL" />
-        <button id="addTorrent">Add torrent</button>
+        <input id="torrentInput" placeholder="Magnet link, info hash, or torrent URL" />
+        <button id="addTorrent">Add</button>
+      </section>
+
+      <section class="toolbar">
+        <label>Search <input id="searchInput" placeholder="Name or hash" /></label>
+        <label>Sort
+          <select id="sortSelect">
+            <option value="added">Added order</option>
+            <option value="name">Name</option>
+            <option value="progress">Progress</option>
+            <option value="speed">Download speed</option>
+            <option value="size">Size</option>
+          </select>
+        </label>
       </section>
 
       <section class="stats-grid">
-        <article><span>Active</span><strong id="activeCount">0</strong></article>
+        <article><span>Total</span><strong id="activeCount">0</strong></article>
         <article><span>Downloaded</span><strong id="downloadedTotal">0 MB</strong></article>
         <article><span>Down speed</span><strong id="downSpeed">0 KB/s</strong></article>
         <article><span>Up speed</span><strong id="upSpeed">0 KB/s</strong></article>
       </section>
 
       <section class="torrent-board">
-        <div class="board-header"><h2>Torrents</h2><span id="statusText">No torrents yet</span></div>
+        <div class="board-header"><h2 id="viewTitle">All torrents</h2><span id="statusText">No torrents yet</span></div>
         <div id="torrentList" class="torrent-list empty"></div>
       </section>
     </main>

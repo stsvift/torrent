@@ -128,12 +128,22 @@ ipcMain.handle('torrent:addFile', async () => {
   return serializeTorrent(torrent);
 });
 
-ipcMain.handle('torrent:remove', async (_event, id) => {
+ipcMain.handle('torrent:remove', async (_event, id, destroyStore = false) => {
   const torrent = torrents.get(id);
   if (!torrent) return;
-  await new Promise((resolve) => torrent.destroy({ destroyStore: false }, resolve));
+  await new Promise((resolve) => torrent.destroy({ destroyStore: Boolean(destroyStore) }, resolve));
   torrents.delete(id);
   broadcastState();
+});
+
+ipcMain.handle('torrent:clearCompleted', async () => {
+  const completed = Array.from(torrents.values()).filter((torrent) => torrent.done);
+  await Promise.all(completed.map((torrent) => new Promise((resolve) => {
+    torrent.destroy({ destroyStore: false }, resolve);
+    torrents.delete(torrent.infoHash);
+  })));
+  broadcastState();
+  return completed.length;
 });
 
 ipcMain.handle('torrent:togglePause', async (_event, id) => {
@@ -160,6 +170,13 @@ ipcMain.handle('torrent:getState', async () => ({
   downloadPath,
   torrents: Array.from(torrents.values()).map(serializeTorrent)
 }));
+
+ipcMain.handle('torrent:reveal', async (_event, id) => {
+  const torrent = torrents.get(id);
+  if (!torrent) return 'Torrent not found';
+  if (torrent.files[0]?.path) return shell.showItemInFolder(path.join(torrent.path, torrent.files[0].path));
+  return shell.openPath(torrent.path || downloadPath);
+});
 
 ipcMain.handle('app:openDownloads', async () => shell.openPath(downloadPath));
 
