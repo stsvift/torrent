@@ -16,7 +16,7 @@
     "webtorrent",
     "windows"
   ],
-  "author": "",
+  "author": "Neyko",
   "license": "MIT",
   "dependencies": {
     "webtorrent": "^2.6.8"

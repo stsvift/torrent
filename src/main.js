@@ -180,4 +180,10 @@ ipcMain.handle('torrent:reveal', async (_event, id) => {
 
 ipcMain.handle('app:openDownloads', async () => shell.openPath(downloadPath));
 
+ipcMain.handle('app:getInfo', async () => ({
+  name: app.getName(),
+  version: app.getVersion(),
+  developer: 'Neyko'
+}));
+
 setInterval(broadcastState, 1000);

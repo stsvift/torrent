@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld('emberTorrent', {
   selectFolder: () => ipcRenderer.invoke('torrent:selectFolder'),
   getState: () => ipcRenderer.invoke('torrent:getState'),
   openDownloads: () => ipcRenderer.invoke('app:openDownloads'),
+  getAppInfo: () => ipcRenderer.invoke('app:getInfo'),
   copyText: (text) => clipboard.writeText(String(text || '')),
   onTorrents: (callback) => ipcRenderer.on('torrents:update', (_event, torrents) => callback(torrents)),
   onToast: (callback) => ipcRenderer.on('toast', (_event, toast) => callback(toast))
