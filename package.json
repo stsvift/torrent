@@ -1,0 +1,49 @@
+{
+  "name": "ember-torrent",
+  "version": "0.1.0",
+  "description": "A modern black-and-orange Windows torrent client built on Electron and WebTorrent.",
+  "main": "src/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "lint": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js",
+    "package:win": "electron-builder --win nsis portable"
+  },
+  "keywords": [
+    "torrent",
+    "electron",
+    "webtorrent",
+    "windows"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "webtorrent": "^2.6.8"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.embertorrent.client",
+    "productName": "EmberTorrent",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "artifactName": "EmberTorrent-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
